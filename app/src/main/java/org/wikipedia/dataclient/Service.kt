@@ -762,14 +762,14 @@ interface Service {
     ): MwQueryResponse
 
     companion object {
-        const val WIKIPEDIA_URL = "https://${WikiSite.BASE_DOMAIN}/"
+        const val WIKIPEDIA_URL = "https://wiki.${WikiSite.BASE_DOMAIN}/"
         const val BASE_AUTHORITY_WIKIMEDIA = "wikimedia.org"
         const val WIKIMEDIA_URL = "https://${BASE_AUTHORITY_WIKIMEDIA}/"
         const val BASE_AUTHORITY_WIKIDATA = "wikidata.org"
         const val WIKIDATA_URL = "https://www.${BASE_AUTHORITY_WIKIDATA}/"
         const val COMMONS_URL = "https://commons.wikimedia.org/"
         const val URL_FRAGMENT_FROM_COMMONS = "/wikipedia/commons/"
-        const val MW_API_PREFIX = "w/api.php?format=json&formatversion=2&errorformat=html&errorsuselocal=1&"
+        const val MW_API_PREFIX = "api.php?format=json&formatversion=2&errorformat=html&errorsuselocal=1&"
         const val PREFERRED_THUMB_SIZE = 330
 
         // Maximum cache time for site-specific data, and other things not likely to change very often.
@@ -777,7 +777,7 @@ interface Service {
 
         fun isWikimediaAuthority(authority: String?): Boolean {
             return !authority.isNullOrEmpty() &&
-                    (authority == WikiSite.BASE_DOMAIN || authority.endsWith(".${WikiSite.BASE_DOMAIN}") ||
+                    ((authority == WikiSite.BASE_DOMAIN || authority.endsWith(".${WikiSite.BASE_DOMAIN}"))  ||
                             authority == BASE_AUTHORITY_WIKIMEDIA || authority.endsWith(".${BASE_AUTHORITY_WIKIMEDIA}") ||
                             authority == BASE_AUTHORITY_WIKIDATA || authority.endsWith(".${BASE_AUTHORITY_WIKIDATA}"))
         }
