@@ -10,6 +10,7 @@ import org.wikipedia.BuildConfig
 import org.wikipedia.WikipediaApp
 import org.wikipedia.analytics.eventplatform.EventService
 import org.wikipedia.dataclient.okhttp.OkHttpConnectionFactory
+import org.wikipedia.dataclient.page.PageSummary
 import org.wikipedia.json.JsonUtil
 import org.wikipedia.settings.Prefs
 import retrofit2.Retrofit
@@ -93,7 +94,22 @@ object ServiceFactory {
             .addConverterFactory(JsonUtil.json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
-
+    suspend fun getPageSummary(wiki: WikiSite, title: String): PageSummary {
+        return if (BuildConfig.HAS_RESTBASE) {
+            getRest(wiki).getPageSummary(title)
+        } else {
+            val page = get(wiki).getInfoWithExtractsByPageTitles(title).query?.firstPage()
+                ?: throw IllegalStateException("No page found for title: $title")
+            PageSummary(
+                displayTitle = page.displayTitle(wiki.languageCode),
+                prefixTitle = page.title,
+                description = page.description,
+                extract = page.extract,
+                thumbnail = page.thumbUrl(),
+                lang = wiki.languageCode
+            )
+        }
+    }
     private class LanguageVariantHeaderInterceptor(private val wiki: WikiSite?) : Interceptor {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {

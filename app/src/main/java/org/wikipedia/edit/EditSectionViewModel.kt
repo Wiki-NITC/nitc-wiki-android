@@ -134,8 +134,8 @@ class EditSectionViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
             var revision = -1L
             while (revision < newRevision && retry < 10) {
                 delay(2000)
-                val pageSummaryResponse = ServiceFactory.getRest(pageTitle.wikiSite)
-                    .getPageSummary(pageTitle.prefixedText, cacheControl = OkHttpConnectionFactory.CACHE_CONTROL_FORCE_NETWORK.toString())
+                val pageSummaryResponse = ServiceFactory
+                    .getPageSummary(pageTitle.wikiSite,pageTitle.prefixedText)
                 revision = pageSummaryResponse.revision
                 retry++
             }

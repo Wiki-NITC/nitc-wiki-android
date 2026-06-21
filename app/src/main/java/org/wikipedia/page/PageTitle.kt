@@ -5,6 +5,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.wikipedia.BuildConfig
 import org.wikipedia.dataclient.WikiSite
 import org.wikipedia.language.LanguageUtil
 import org.wikipedia.staticdata.ContributionsNameData
@@ -190,14 +191,24 @@ data class PageTitle(
     }
 
     private fun getUriForDomain(domain: String): String {
-        return String.format(
-            "%1\$s://%2\$s/%3\$s/%4\$s%5\$s",
-            wikiSite.scheme(),
-            domain,
-            if (LanguageUtil.isChineseVariant(domain)) wikiSite.languageCode else "wiki",
-            UriUtil.encodeURL(prefixedText),
-            if (!fragment.isNullOrEmpty()) "#" + UriUtil.encodeURL(fragment!!) else ""
-        )
+        return if (BuildConfig.HAS_RESTBASE) {
+            String.format(
+                "%1\$s://%2\$s/%3\$s/%4\$s%5\$s",
+                wikiSite.scheme(),
+                domain,
+                if (LanguageUtil.isChineseVariant(domain)) wikiSite.languageCode else "wiki",
+                UriUtil.encodeURL(prefixedText),
+                if (!fragment.isNullOrEmpty()) "#" + UriUtil.encodeURL(fragment!!) else ""
+            )
+        } else {
+            String.format(
+                "%1\$s://%2\$s/%3\$s%4\$s",
+                wikiSite.scheme(),
+                domain,
+                UriUtil.encodeURL(prefixedText),
+                if (!fragment.isNullOrEmpty()) "#" + UriUtil.encodeURL(fragment!!) else ""
+            )
+        }
     }
 
     override fun equals(other: Any?): Boolean {

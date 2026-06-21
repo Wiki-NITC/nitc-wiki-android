@@ -7,6 +7,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.wikipedia.BuildConfig
 import org.wikipedia.R
 import org.wikipedia.WikipediaApp
 import org.wikipedia.analytics.eventplatform.ArticleLinkPreviewInteractionEvent
@@ -153,9 +154,20 @@ class PageFragmentLoadState(private var model: PageViewModel,
             }
 
             val pageSummaryRequest = async {
-                ServiceFactory.getRest(title.wikiSite).getSummaryResponse(title.prefixedText, cacheControl = model.cacheControl.toString(),
-                    saveHeader = if (model.isInReadingList) OfflineCacheInterceptor.SAVE_HEADER_SAVE else null,
-                    langHeader = title.wikiSite.languageCode, titleHeader = UriUtil.encodeURL(title.prefixedText))
+                if (BuildConfig.HAS_RESTBASE) {
+                    ServiceFactory.getRest(title.wikiSite).getSummaryResponse(title.prefixedText, cacheControl = model.cacheControl.toString(),
+                        saveHeader = if (model.isInReadingList) OfflineCacheInterceptor.SAVE_HEADER_SAVE else null,
+                        langHeader = title.wikiSite.languageCode, titleHeader = UriUtil.encodeURL(title.prefixedText))
+                } else {
+                    null
+                }
+            }
+            val pageSummaryDirectRequest = async {
+                if (!BuildConfig.HAS_RESTBASE) {
+                    ServiceFactory.getPageSummary(title.wikiSite, title.prefixedText)
+                } else {
+                    null
+                }
             }
             val makeWatchRequest = WikipediaApp.instance.isOnline && AccountUtil.isLoggedIn
             val watchedRequest = async {
@@ -185,18 +197,28 @@ class PageFragmentLoadState(private var model: PageViewModel,
                     MwQueryResponse()
                 }
             }
-            val pageSummaryResponse = pageSummaryRequest.await()
+
             val watchedResponse = watchedRequest.await()
             val categoriesResponse = categoriesRequest.await()
             val isWatched = watchedResponse.query?.firstPage()?.watched == true
             val hasWatchlistExpiry = watchedResponse.query?.firstPage()?.hasWatchlistExpiry() == true
-            if (pageSummaryResponse.body() == null) {
-                throw RuntimeException("Summary response was invalid.")
-            }
-            val redirectedFrom = if (pageSummaryResponse.raw().priorResponse?.isRedirect == true) model.title?.displayText else null
-            createPageModel(pageSummaryResponse, isWatched, hasWatchlistExpiry)
-            if (OfflineCacheInterceptor.SAVE_HEADER_SAVE == pageSummaryResponse.headers()[OfflineCacheInterceptor.SAVE_HEADER]) {
-                showPageOfflineMessage(pageSummaryResponse.headers().getInstant("date"))
+
+            val redirectedFrom: String?
+            if (BuildConfig.HAS_RESTBASE) {
+                val pageSummaryResponse = pageSummaryRequest.await()
+                if (pageSummaryResponse?.body() == null) {
+                    throw RuntimeException("Summary response was invalid.")
+                }
+                redirectedFrom = if (pageSummaryResponse.raw().priorResponse?.isRedirect == true) model.title?.displayText else null
+                createPageModel(pageSummaryResponse, isWatched, hasWatchlistExpiry)
+                if (OfflineCacheInterceptor.SAVE_HEADER_SAVE == pageSummaryResponse.headers()[OfflineCacheInterceptor.SAVE_HEADER]) {
+                    showPageOfflineMessage(pageSummaryResponse.headers().getInstant("date"))
+                }
+            } else {
+                val pageSummary = pageSummaryDirectRequest.await()
+                    ?: throw RuntimeException("Summary response was invalid.")
+                redirectedFrom = null
+                createPageModelDirect(pageSummary, isWatched, hasWatchlistExpiry)
             }
 
             val categoryList = (categoriesResponse.query ?: watchedResponse.query)?.firstPage()?.categories?.map { category ->
@@ -217,6 +239,46 @@ class PageFragmentLoadState(private var model: PageViewModel,
         }
     }
 
+    private fun createPageModelDirect(pageSummary: PageSummary,
+                                      isWatched: Boolean,
+                                      hasWatchlistExpiry: Boolean) {
+        val page = pageSummary.toPage(model.title)
+        model.page = page
+        model.isWatched = isWatched
+        model.hasWatchlistExpiry = hasWatchlistExpiry
+        model.title = page?.title
+        model.title?.let { title ->
+            if (title.description.isNullOrEmpty()) {
+                WikipediaApp.instance.appSessionEvent.noDescription()
+            }
+            if (!title.isMainPage) {
+                title.displayText = page?.displayTitle.orEmpty()
+            }
+            title.thumbUrl = pageSummary.thumbnailUrl
+            leadImagesHandler.loadLeadImage()
+            fragment.requireActivity().invalidateOptionsMenu()
+
+            WikipediaApp.instance.tabList.getOrNull(WikipediaApp.instance.tabCount - 1)?.setBackStackPositionTitle(title)
+
+            model.curEntry?.let {
+                val entry = HistoryEntry(title, it.source, timestamp = it.timestamp).apply {
+                    referrer = it.referrer
+                    prevId = it.prevId
+                }
+                model.curEntry = entry
+
+                MainScope().launch {
+                    AppDatabase.instance.historyEntryDao().upsert(entry).run {
+                        model.curEntry?.id = this
+                    }
+                    AppDatabase.instance.pageImagesDao().upsertForMetadata(entry, title.thumbUrl, title.description, pageSummary.coordinates?.latitude, pageSummary.coordinates?.longitude)
+                }
+
+                WikipediaApp.instance.appSessionEvent.pageViewed(entry)
+                ArticleLinkPreviewInteractionEvent(title.wikiSite.dbName(), pageSummary.pageId, entry.source).logNavigate()
+            }
+        }
+    }
     private fun checkAnonNotifications(title: PageTitle) {
         fragment.lifecycleScope.launch(CoroutineExceptionHandler { _, throwable ->
             L.e(throwable)

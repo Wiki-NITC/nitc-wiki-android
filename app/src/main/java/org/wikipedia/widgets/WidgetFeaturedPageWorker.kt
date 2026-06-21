@@ -31,13 +31,13 @@ class WidgetFeaturedPageWorker(
             val summary = if (result.tfa != null) {
                 val hasParentLanguageCode = !app.languageState.getDefaultLanguageCode(app.wikiSite.languageCode).isNullOrEmpty()
                 if (hasParentLanguageCode) {
-                    ServiceFactory.getRest(app.wikiSite).getPageSummary(result.tfa.apiTitle)
+                    ServiceFactory.getPageSummary(app.wikiSite,result.tfa.apiTitle)
                 } else {
                     result.tfa
                 }
             } else {
                 val response = ServiceFactory.get(mainPageTitle.wikiSite).parseTextForMainPage(mainPageTitle.prefixedText)
-                ServiceFactory.getRest(app.wikiSite).getPageSummary(findFeaturedArticleTitle(response.text))
+                ServiceFactory.getPageSummary(app.wikiSite,findFeaturedArticleTitle(response.text))
             }
 
             val pageTitle = summary.getPageTitle(app.wikiSite)

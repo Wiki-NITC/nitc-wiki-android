@@ -66,7 +66,7 @@ class SuggestedEditsImageRecsFragmentViewModel(savedStateHandle: SavedStateHandl
 
             recommendation = page.growthimagesuggestiondata.first()
             val wikiSite = WikiSite.forLanguageCode(langCode)
-            summary = ServiceFactory.getRest(wikiSite).getPageSummary(page.title)
+            summary = ServiceFactory.getPageSummary(wikiSite,page.title)
             pageTitle = summary.getPageTitle(wikiSite)
 
             val thumbUrl = UriUtil.resolveProtocolRelativeUrl(ImageUrlUtil.getUrlForPreferredSize(recommendation.images[0].metadata!!.thumbUrl, Constants.PREFERRED_CARD_THUMBNAIL_SIZE))

@@ -168,10 +168,7 @@ class SavedPageSyncService(context: Context, params: WorkerParameters) : Corouti
         return withContext(Dispatchers.IO) {
             val pageTitle = ReadingListPage.toPageTitle(page)
 
-            val summaryCall = async { ServiceFactory.getRest(pageTitle.wikiSite).getPageSummary(pageTitle.prefixedText,
-                cacheControl = OkHttpConnectionFactory.CACHE_CONTROL_FORCE_NETWORK.toString(),
-                saveHeader = OfflineCacheInterceptor.SAVE_HEADER_SAVE, langHeader = pageTitle.wikiSite.languageCode,
-                titleHeader = UriUtil.encodeURL(pageTitle.prefixedText)) }
+            val summaryCall = async { ServiceFactory.getPageSummary(pageTitle.wikiSite,pageTitle.prefixedText)}
 
             val mediaListCall = async { ServiceFactory.getRest(pageTitle.wikiSite).getMediaList(pageTitle.prefixedText,
                 cacheControl = OkHttpConnectionFactory.CACHE_CONTROL_FORCE_NETWORK.toString(),

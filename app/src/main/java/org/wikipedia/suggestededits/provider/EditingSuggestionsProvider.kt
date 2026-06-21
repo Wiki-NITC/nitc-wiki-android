@@ -92,7 +92,7 @@ object EditingSuggestionsProvider {
                     }
                 }
 
-                pageSummary = ServiceFactory.getRest(wiki).getPageSummary(title)
+                pageSummary = ServiceFactory.getPageSummary(wiki,title)
             } finally {
                 mutex.release()
             }
@@ -150,14 +150,14 @@ object EditingSuggestionsProvider {
 
                 titles?.let {
                     val sourcePageSummary = async {
-                        ServiceFactory.getRest(it.first.wikiSite).getPageSummary(it.first.prefixedText).apply {
+                        ServiceFactory.getPageSummary(it.first.wikiSite,it.first.prefixedText).apply {
                             if (description.isNullOrEmpty()) {
                                 description = it.first.description
                             }
                         }
                     }
                     val targetPageSummary = async {
-                        ServiceFactory.getRest(it.second.wikiSite).getPageSummary(it.second.prefixedText)
+                        ServiceFactory.getPageSummary(it.second.wikiSite,it.second.prefixedText)
                     }
                     pair = sourcePageSummary.await() to targetPageSummary.await()
                 }
