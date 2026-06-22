@@ -774,8 +774,11 @@ interface Service {
         const val BASE_AUTHORITY_WIKIMEDIA = "wikimedia.org"
         const val WIKIMEDIA_URL = "https://${BASE_AUTHORITY_WIKIMEDIA}/"
         const val BASE_AUTHORITY_WIKIDATA = "wikidata.org"
-        const val WIKIDATA_URL = "https://www.${BASE_AUTHORITY_WIKIDATA}/"
-        const val COMMONS_URL = "https://commons.wikimedia.org/"
+//        const val WIKIDATA_URL = "https://www.${BASE_AUTHORITY_WIKIDATA}/"
+        val WIKIDATA_URL = "wiki.fosscell.org/"
+//        const val COMMONS_URL = "https://commons.wikimedia.org/"
+        val COMMONS_URL = "wiki.fosscell.org/"
+
         const val META_WIKI_BASE_URI = "https://meta.wikimedia.org"
         const val DEFAULT_RESTBASE_URI_FORMAT = "%1\$s://%2\$s/api/rest_v1/"
         const val URL_FRAGMENT_FROM_COMMONS = "/wikipedia/commons/"
