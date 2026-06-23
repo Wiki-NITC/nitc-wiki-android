@@ -64,6 +64,7 @@ android {
         buildConfigField "boolean", "HAS_CORE_REST", "true"
         buildConfigField "boolean", "HAS_COMMONS", "true"
         buildConfigField "boolean", "HAS_WIKIDATA", "true"
+        buildConfigField "boolean", "IS_NITC_WIKI", "false"
     }
 
     testOptions {
