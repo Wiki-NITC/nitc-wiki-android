@@ -150,8 +150,8 @@ android {
             buildConfigField "boolean", "IS_NITC_WIKI", "true"
             buildConfigField "String",  "WIKI_BASE_URL",  '"https://wiki.fosscell.org"'
             buildConfigField "String",  "WIKI_API_URL",   '"https://wiki.fosscell.org/api.php"'
-            buildConfigField "boolean", "HAS_RESTBASE",   "false"
-            buildConfigField "String", "DEFAULT_RESTBASE_URI_FORMAT", '"%1$s://%2$s/rest.php/v1/"'
+            buildConfigField "boolean", "HAS_RESTBASE",   "true"
+            buildConfigField "String", "DEFAULT_RESTBASE_URI_FORMAT", '"%1$s://%2$s/api/rest_v1/"'
             buildConfigField "boolean", "HAS_CORE_REST",  "false"
             buildConfigField "boolean", "HAS_COMMONS",    "false"
             buildConfigField "boolean", "HAS_WIKIDATA",   "false"
