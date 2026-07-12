@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="432dp"
+            android:height="432dp"
+            android:viewportWidth="432"
+            android:viewportHeight="432">
+
+            <path
+                android:name="path_background"
+                android:fillColor="@color/splash_background_color"
+                android:pathData="M 0 0 L 0 432 L 432 432 L 432 0 Z"/>
+
+            <group
+                android:name="group_W"
+                android:pivotX="216"
+                android:pivotY="230">
+                <path
+                    android:name="path_W"
+                    android:fillColor="#C4912E"
+                    android:fillAlpha="0"
+                    android:pathData="M306.36 173.64 273.42 300.0H236.16L216.0 216.84L195.12 300.0H157.86L125.82000000000001 173.64H158.76L176.94 265.62L199.44 173.64H233.28L254.88 265.62L273.24 173.64Z"/>
+            </group>
+
+            <group
+                android:name="group_NITC"
+                android:pivotX="267"
+                android:pivotY="145">
+                <path
+                    android:name="path_NITC"
+                    android:fillColor="#FFFFFF"
+                    android:fillAlpha="0"
+                    android:pathData="M249.12 155.0H242.964L232.668 139.412V155.0H226.512V129.728H232.668L242.964 145.388V129.728H249.12Z M259.74 129.728V155.0H253.584V129.728Z M282.38399999999996 129.728V134.66H275.688V155.0H269.532V134.66H262.83599999999996V129.728Z M297.144 129.44Q301.644 129.44 304.84799999999996 131.816Q308.05199999999996 134.192 309.132 138.296H302.364Q301.608 136.712 300.222 135.88400000000001Q298.836 135.056 297.072 135.056Q294.228 135.056 292.464 137.036Q290.7 139.016 290.7 142.328Q290.7 145.64 292.464 147.62Q294.228 149.6 297.072 149.6Q298.836 149.6 300.222 148.772Q301.608 147.944 302.364 146.36H309.132Q308.05199999999996 150.464 304.84799999999996 152.822Q301.644 155.18 297.144 155.18Q293.472 155.18 290.57399999999996 153.542Q287.676 151.904 286.056 148.988Q284.436 146.072 284.436 142.328Q284.436 138.584 286.056 135.65Q287.676 132.716 290.57399999999996 131.078Q293.472 129.44 297.144 129.44Z"/>
+            </group>
+
+        </vector>
+    </aapt:attr>
+
+    <target android:name="group_W">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:duration="800"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="scaleX"
+                    android:valueFrom="0.7" android:valueTo="1"
+                    android:valueType="floatType"/>
+                <objectAnimator
+                    android:duration="800"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="scaleY"
+                    android:valueFrom="0.7" android:valueTo="1"
+                    android:valueType="floatType"/>
+            </set>
+        </aapt:attr>
+    </target>
+
+    <target android:name="path_W">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="600"
+                android:interpolator="@android:interpolator/fast_out_slow_in"
+                android:propertyName="fillAlpha"
+                android:valueFrom="0" android:valueTo="1"
+                android:valueType="floatType"/>
+        </aapt:attr>
+    </target>
+
+    <target android:name="group_NITC">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:duration="400" android:startOffset="600"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="scaleX"
+                    android:valueFrom="0.5" android:valueTo="1"
+                    android:valueType="floatType"/>
+                <objectAnimator
+                    android:duration="400" android:startOffset="600"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="scaleY"
+                    android:valueFrom="0.5" android:valueTo="1"
+                    android:valueType="floatType"/>
+            </set>
+        </aapt:attr>
+    </target>
+
+    <target android:name="path_NITC">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="400" android:startOffset="600"
+                android:interpolator="@android:interpolator/fast_out_slow_in"
+                android:propertyName="fillAlpha"
+                android:valueFrom="0" android:valueTo="1"
+                android:valueType="floatType"/>
+        </aapt:attr>
+    </target>
+
+</animated-vector>

@@ -2,6 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Branding overrides for the nitcwiki flavor. Replace Wikipedia → WikiNITC. -->
 
+    <string name="account_type">org.nitcwiki.account</string>
+
     <string name="about_description">About the WikiNITC app</string>
 
     <string name="about_logo_content_description">WikiNITC puzzle globe logo</string>
