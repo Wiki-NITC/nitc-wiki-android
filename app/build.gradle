@@ -148,6 +148,7 @@ android {
         nitcwiki {
             applicationId 'org.nitcwiki'
             versionName computeVersionName(defaultConfig.versionCode, 'nitcwiki')
+            signingConfig = signingConfigs.prod
             buildConfigField "boolean", "IS_NITC_WIKI", "true"
             buildConfigField "String",  "WIKI_BASE_URL",  '"https://wiki.fosscell.org"'
             buildConfigField "String",  "WIKI_API_URL",   '"https://wiki.fosscell.org/api.php"'

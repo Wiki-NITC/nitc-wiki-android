@@ -1,14 +1,34 @@
-### Wikipedia Android app
+# NITC Wiki Android
 
-This repository contains the source code for the official [Wikipedia Android app](https://play.google.com/store/apps/details?id=org.wikipedia).
+An Android app for browsing and editing the [NITC Wiki](https://wiki.fosscell.org).
 
-### Documentation
+Forked from the [official Wikipedia Android app](https://github.com/wikimedia/apps-android-wikipedia) by the Wikimedia Foundation.
 
-All documentation is kept on [our wiki](https://www.mediawiki.org/wiki/Wikimedia_Apps/Team/Android/App_hacking). Check it out!
+## Features
 
-### Issues
+- Fast article search with search suggestions
+- Clean, mobile-optimized article reader
+- Table of contents with quick section navigation
+- Image viewer with pinch-to-zoom
+- Internal link navigation between wiki pages
+- Multiple themes (Light, Dark, Black, Sepia)
+- Adjustable font size and reading preferences
+- Offline reading through saved pages or reading lists
+- Reading history
+- Bookmarks and reading lists
+- Share articles and images
+- Login support for editing
 
-Kindly file issues in [our bug tracker][1]
+## Coming soon
 
+- Personalised feed
+- Language switching support
 
-[1]: https://phabricator.wikimedia.org/maniphest/task/edit/form/10/?title=&projects=wikipedia-android-app-backlog&points=1&description=%3D%3D%3D+Steps+to+reproduce%0A%23+%0A%23+%0A%23+%0A%0A%3D%3D%3D+Expected+results%0A%0A%3D%3D%3D+Actual+results%0A%0A%3D%3D%3D+Stack%20trace%0A%60%60%60lines%3D10%0A(Optional%20logcat%20output)%0A%60%60%60%0A%0A%3D%3D%3D+Environments+observed%0A**App+version%3A+**+%0A**Android+OS+versions%3A**+%0A**Device+model%3A**+%0A**Device+language%3A**
+## Bug reports
+
+Found something broken? Please open an issue at
+https://github.com/Wiki-NITC/nitc-wiki-android/issues with:
+- A description of the issue
+- Steps to reproduce
+- Your device model and Android version
+- Screenshots if applicable
