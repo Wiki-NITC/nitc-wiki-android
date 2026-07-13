@@ -289,7 +289,7 @@ object Prefs {
         set(pending) = PrefsIoUtil.setBoolean(R.string.preference_key_reading_lists_remote_setup_pending, pending)
 
     var isInitialOnboardingEnabled
-        get() = PrefsIoUtil.getBoolean(R.string.preference_key_initial_onboarding_enabled, true)
+        get() = PrefsIoUtil.getBoolean(R.string.preference_key_initial_onboarding_enabled, false)
         set(enabled) = PrefsIoUtil.setBoolean(R.string.preference_key_initial_onboarding_enabled, enabled)
 
     fun askedForPermissionOnce(permission: String): Boolean {
@@ -974,7 +974,7 @@ object Prefs {
         set(value) = PrefsIoUtil.setBoolean(R.string.preference_key_reading_challenge_widget_fast_cycle, value)
 
     var isExploreFeedUpdatePromptShown
-        get() = PrefsIoUtil.getBoolean(R.string.preference_key_explore_feed_update_prompt_shown, false)
+        get() = PrefsIoUtil.getBoolean(R.string.preference_key_explore_feed_update_prompt_shown, true)
         set(value) = PrefsIoUtil.setBoolean(R.string.preference_key_explore_feed_update_prompt_shown, value)
 
     var homeForYouModulesToday
