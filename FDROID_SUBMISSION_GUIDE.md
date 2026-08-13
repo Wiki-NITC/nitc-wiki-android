@@ -148,6 +148,18 @@ Before submitting, verify the following:
 - Metadata and screenshots are present.
 - The build metadata file is valid and passes F-Droid linting.
 
+### Important caveat: remaining F-Droid verification
+
+The repository has been updated for the minimum F-Droid build isolation changes, but additional verification is still required before shipping.
+
+- [x] Ensure the `fdroid` flavor does not apply the `com.google.gms.google-services` plugin.
+- [x] Ensure the `fdroid` flavor uses a stable version name without a date suffix.
+- [x] Verify the merged `fdroidRelease` manifest removes Firebase messaging, Google Pay, and other Google-specific components.
+- [x] Check the `fdroidReleaseRuntimeClasspath` dependencies for any remaining `com.google.firebase`, `com.google.android.gms`, or other proprietary Google artifacts.
+- [ ] Confirm the final F-Droid app package name and external F-Droid metadata both use the same identity.
+- [ ] Add release tags and changelog entries for the versions you intend to publish.
+- [ ] Prepare and validate the F-Droid `fdroiddata` metadata file for this app.
+
 ## 7. Recommended order of work
 
 1. Decide final app identity and package name.
