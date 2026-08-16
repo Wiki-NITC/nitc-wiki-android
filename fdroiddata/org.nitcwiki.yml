@@ -1,0 +1,29 @@
+RepoType: git
+Repo: git@github.com:Wiki-NITC/nitc-wiki-android.git
+
+License: Apache-2.0
+IssueTracker: https://github.com/Wiki-NITC/nitc-wiki-android/issues
+
+Builds:
+  - versionName: 1.0.0
+    versionCode: 1
+    commit: v1.0.0
+    subdir: app
+    gradle:
+      - fdroidRelease
+
+Archive: 
+  - path: app
+
+Description: |
+  The official app for NITCWiki. Imagine a campus where every member of NITC has free access
+  to the collective knowledge of all NITCians.
+
+Categories:
+  - Reference
+
+AutoUpdate: true
+
+Notes: |
+  This metadata is a draft created for review. The repository uses a `fdroid` product flavor
+  which isolates Google services; the `fdroid` flavor versionName is `1.0.0` and versionCode is `1`.

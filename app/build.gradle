@@ -141,6 +141,8 @@ android {
         }
         fdroid {
             versionName computeVersionName(defaultConfig.versionCode, 'fdroid', false)
+            // Set a stable, initial numeric versionCode for F-Droid
+            versionCode 1
             // Use debug signing for local F-Droid builds to avoid requiring private prod keystore
             signingConfig = signingConfigs.debug
         }
