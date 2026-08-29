@@ -11,14 +11,14 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.wikipedia.Constants
+import org.wikipedia.NITCWikiApp
 import org.wikipedia.R
-import org.wikipedia.WikipediaApp
 import org.wikipedia.activity.BaseActivity
 import org.wikipedia.analytics.eventplatform.PlacesEvent
 import org.wikipedia.databinding.ActivityPlacesFiltersBinding
 import org.wikipedia.databinding.ViewPlacesFilterItemBinding
 import org.wikipedia.settings.Prefs
-import org.wikipedia.settings.languages.WikipediaLanguagesActivity
+import org.wikipedia.settings.languages.NITCWikiLanguagesActivity
 import org.wikipedia.util.ResourceUtil
 import org.wikipedia.views.DefaultViewHolder
 
@@ -30,8 +30,8 @@ class PlacesFilterActivity : BaseActivity() {
 
     val addLanguageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         // Check if places wiki language code was deleted
-        if (!WikipediaApp.instance.languageState.appLanguageCodes.contains(Prefs.placesWikiCode)) {
-            Prefs.placesWikiCode = WikipediaApp.instance.appOrSystemLanguageCode
+        if (!NITCWikiApp.instance.languageState.appLanguageCodes.contains(Prefs.placesWikiCode)) {
+            Prefs.placesWikiCode = NITCWikiApp.instance.appOrSystemLanguageCode
         }
         setUpRecyclerView()
         binding.placesFiltersRecyclerView.adapter?.notifyDataSetChanged()
@@ -58,7 +58,7 @@ class PlacesFilterActivity : BaseActivity() {
     private fun setUpRecyclerView() {
         filtersList.clear()
         filtersList.add(HEADER)
-        filtersList.addAll(WikipediaApp.instance.languageState.appLanguageCodes)
+        filtersList.addAll(NITCWikiApp.instance.languageState.appLanguageCodes)
         filtersList.add(FOOTER)
         binding.placesFiltersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.placesFiltersRecyclerView.adapter = PlacesLangListFilterAdapter(this)
@@ -115,7 +115,7 @@ class PlacesFilterActivity : BaseActivity() {
     inner class PlacesFilterFooterViewHolder(itemView: View) : DefaultViewHolder<View>(itemView) {
         fun bindItem() {
             itemView.setOnClickListener {
-                addLanguageLauncher.launch(WikipediaLanguagesActivity.newIntent(itemView.context,
+                addLanguageLauncher.launch(NITCWikiLanguagesActivity.newIntent(itemView.context,
                     Constants.InvokeSource.PLACES))
             }
         }
@@ -126,7 +126,7 @@ class PlacesFilterActivity : BaseActivity() {
         }
 
         fun bindItem(languageCode: String) {
-            itemViewBinding.placesFilterTitle.text = WikipediaApp.instance.languageState.getAppLanguageLocalizedName(languageCode)
+            itemViewBinding.placesFilterTitle.text = NITCWikiApp.instance.languageState.getAppLanguageLocalizedName(languageCode)
             itemViewBinding.placesFilterLangCode.setLangCode(languageCode)
             itemViewBinding.placesFilterRadio.isVisible = languageCode == Prefs.placesWikiCode
             itemViewBinding.root.setOnClickListener {

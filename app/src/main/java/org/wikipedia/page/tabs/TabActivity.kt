@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.wikipedia.Constants
 import org.wikipedia.Constants.InvokeSource
+import org.wikipedia.NITCWikiApp
 import org.wikipedia.R
-import org.wikipedia.WikipediaApp
 import org.wikipedia.activity.BaseActivity
 import org.wikipedia.auth.AccountUtil
 import org.wikipedia.databinding.ActivityTabsBinding
@@ -35,7 +35,7 @@ import org.wikipedia.views.WikiCardView
 
 class TabActivity : BaseActivity() {
     private lateinit var binding: ActivityTabsBinding
-    private val app: WikipediaApp = WikipediaApp.instance
+    private val app: NITCWikiApp = NITCWikiApp.instance
     private var launchedFromPageActivity = false
     private var cancelled = true
 

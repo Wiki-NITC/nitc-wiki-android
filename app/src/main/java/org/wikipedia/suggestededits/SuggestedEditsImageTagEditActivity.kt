@@ -8,8 +8,8 @@ import android.view.View.VISIBLE
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import org.wikipedia.Constants
+import org.wikipedia.NITCWikiApp
 import org.wikipedia.R
-import org.wikipedia.WikipediaApp
 import org.wikipedia.activity.BaseActivity
 import org.wikipedia.databinding.ActivitySuggestedEditsFeedCardImageTagsBinding
 import org.wikipedia.dataclient.mwapi.MwQueryPage
@@ -51,7 +51,7 @@ class SuggestedEditsImageTagEditActivity : BaseActivity(), SuggestedEditsItemFra
     }
 
     override fun getLangCode(): String {
-        return WikipediaApp.instance.languageState.appLanguageCode
+        return NITCWikiApp.instance.languageState.appLanguageCode
     }
 
     override fun getSinglePage(): MwQueryPage? {

@@ -27,8 +27,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.wikipedia.Constants
+import org.wikipedia.NITCWikiApp
 import org.wikipedia.R
-import org.wikipedia.WikipediaApp
 import org.wikipedia.activity.FragmentUtil
 import org.wikipedia.databinding.DialogImageTagSelectBinding
 import org.wikipedia.dataclient.ServiceFactory
@@ -126,7 +126,7 @@ class SuggestedEditsImageTagDialog : DialogFragment() {
             L.d(throwable)
         }) {
             delay(500)
-            val search = ServiceFactory.get(Constants.wikidataWikiSite).searchEntities(searchTerm, WikipediaApp.instance.appOrSystemLanguageCode, WikipediaApp.instance.appOrSystemLanguageCode)
+            val search = ServiceFactory.get(Constants.wikidataWikiSite).searchEntities(searchTerm, NITCWikiApp.instance.appOrSystemLanguageCode, NITCWikiApp.instance.appOrSystemLanguageCode)
             val labelList = search.results.map { ImageTag(it.id, it.label, it.description) }
             applyResults(labelList)
         }

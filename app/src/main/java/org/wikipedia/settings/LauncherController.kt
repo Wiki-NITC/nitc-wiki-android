@@ -3,13 +3,13 @@ package org.wikipedia.settings
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
+import org.wikipedia.NITCWikiApp
 import org.wikipedia.R
-import org.wikipedia.WikipediaApp
 
 object LauncherController {
 
     fun setIcon(icon: LauncherIcon) {
-        val context = WikipediaApp.instance.applicationContext
+        val context = NITCWikiApp.instance.applicationContext
         val packageManager = context.packageManager
         LauncherIcon.entries.forEach { launcherIcon ->
             packageManager.setComponentEnabledSetting(

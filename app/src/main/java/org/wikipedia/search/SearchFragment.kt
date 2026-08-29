@@ -19,8 +19,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import org.wikipedia.Constants
 import org.wikipedia.Constants.InvokeSource
+import org.wikipedia.NITCWikiApp
 import org.wikipedia.R
-import org.wikipedia.WikipediaApp
 import org.wikipedia.analytics.eventplatform.PlacesEvent
 import org.wikipedia.database.AppDatabase
 import org.wikipedia.databinding.FragmentSearchBinding
@@ -33,8 +33,8 @@ import org.wikipedia.places.PlacesActivity
 import org.wikipedia.readinglist.ReadingListBehaviorsUtil
 import org.wikipedia.search.db.RecentSearch
 import org.wikipedia.settings.Prefs
-import org.wikipedia.settings.languages.WikipediaLanguagesActivity
-import org.wikipedia.settings.languages.WikipediaLanguagesFragment
+import org.wikipedia.settings.languages.NITCWikiLanguagesActivity
+import org.wikipedia.settings.languages.NITCWikiLanguagesFragment
 import org.wikipedia.util.DeviceUtil
 import org.wikipedia.util.FeedbackUtil
 import org.wikipedia.util.ResourceUtil
@@ -45,7 +45,7 @@ import java.util.Locale
 class SearchFragment : Fragment(), SearchResultCallback, RecentSearchesFragment.Callback, LanguageScrollView.Callback {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private var app = WikipediaApp.instance
+    private var app = NITCWikiApp.instance
     private var langBtnClicked = false
     private var isSearchActive = false
     private var articleTitle: String? = null
@@ -92,8 +92,8 @@ class SearchFragment : Fragment(), SearchResultCallback, RecentSearchesFragment.
                 requireActivity().setResult(RESULT_LANG_CHANGED)
             }
             it.data?.let { intent ->
-                if (intent.hasExtra(WikipediaLanguagesFragment.ACTIVITY_RESULT_LANG_POSITION_DATA)) {
-                    position = intent.getIntExtra(WikipediaLanguagesFragment.ACTIVITY_RESULT_LANG_POSITION_DATA, 0)
+                if (intent.hasExtra(NITCWikiLanguagesFragment.ACTIVITY_RESULT_LANG_POSITION_DATA)) {
+                    position = intent.getIntExtra(NITCWikiLanguagesFragment.ACTIVITY_RESULT_LANG_POSITION_DATA, 0)
                 } else if (app.languageState.appLanguageCodes.contains(searchLanguageCode)) {
                     position = app.languageState.appLanguageCodes.indexOf(searchLanguageCode)
                 }
@@ -268,7 +268,7 @@ class SearchFragment : Fragment(), SearchResultCallback, RecentSearchesFragment.
 
     private fun onLangButtonClick() {
         langBtnClicked = true
-        requestAddLanguageLauncher.launch(WikipediaLanguagesActivity.newIntent(requireActivity(), InvokeSource.SEARCH))
+        requestAddLanguageLauncher.launch(NITCWikiLanguagesActivity.newIntent(requireActivity(), InvokeSource.SEARCH))
     }
 
     private fun startSearch(term: String?, force: Boolean, resetHybridSearch: Boolean = false) {
@@ -346,7 +346,7 @@ class SearchFragment : Fragment(), SearchResultCallback, RecentSearchesFragment.
         binding.searchCabView.queryHint =
             if (invokeSource == InvokeSource.PLACES) {
                 getString(R.string.places_search_hint)
-            } else if (Prefs.isHybridSearchOnboardingShown && HybridSearchAbCTest().isHybridSearchEnabled(WikipediaApp.instance.languageState.appLanguageCode)) {
+            } else if (Prefs.isHybridSearchOnboardingShown && HybridSearchAbCTest().isHybridSearchEnabled(NITCWikiApp.instance.languageState.appLanguageCode)) {
                 if (articleTitle.isNullOrEmpty()) {
                     getString(R.string.hybrid_search_search_hint)
                 } else {
