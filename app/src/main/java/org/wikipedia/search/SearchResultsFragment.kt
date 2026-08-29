@@ -19,8 +19,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.wikipedia.Constants
+import org.wikipedia.NITCWikiApp
 import org.wikipedia.R
-import org.wikipedia.WikipediaApp
 import org.wikipedia.activity.FragmentUtil.getCallback
 import org.wikipedia.analytics.eventplatform.BreadCrumbLogEvent
 import org.wikipedia.analytics.testkitchen.TestKitchenAdapter
@@ -268,7 +268,7 @@ class SearchResultsFragment : Fragment() {
 
     private val searchLanguageCode
         get() =
-            if (isAdded) (requireParentFragment() as SearchFragment).searchLanguageCode else WikipediaApp.instance.languageState.appLanguageCode
+            if (isAdded) (requireParentFragment() as SearchFragment).searchLanguageCode else NITCWikiApp.instance.languageState.appLanguageCode
 
     override fun onDestroyView() {
         super.onDestroyView()

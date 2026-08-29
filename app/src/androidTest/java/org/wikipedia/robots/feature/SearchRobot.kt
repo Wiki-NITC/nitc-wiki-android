@@ -23,18 +23,18 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.Matchers.allOf
+import org.wikipedia.NITCWikiApp
 import org.wikipedia.R
-import org.wikipedia.WikipediaApp
 import org.wikipedia.base.TestConfig
+import org.wikipedia.base.TestNITCWikiColors
 import org.wikipedia.base.TestThemeColorType
-import org.wikipedia.base.TestWikipediaColors
 import org.wikipedia.base.utils.assertTextColor
 import org.wikipedia.theme.Theme
 
 class SearchRobot : BaseRobot() {
     fun tapSearchView() = apply {
         // Click the Search box
-        click.onViewWithText("Search Wikipedia")
+        click.onViewWithText("Search NITCWiki")
         delay(TestConfig.DELAY_SHORT)
     }
 
@@ -115,13 +115,13 @@ class SearchRobot : BaseRobot() {
     }
 
     fun checkLanguageAvailability(languageCode: String) = apply {
-        val language = WikipediaApp.instance.languageState.getAppLanguageLocalizedName(languageCode) ?: ""
+        val language = NITCWikiApp.instance.languageState.getAppLanguageLocalizedName(languageCode) ?: ""
         verify.viewWithIdAndText(viewId = R.id.language_label, text = language)
         delay(TestConfig.DELAY_SHORT)
     }
 
     fun clickLanguage(languageCode: String) = apply {
-        val language = WikipediaApp.instance.languageState.getAppLanguageLocalizedName(languageCode) ?: ""
+        val language = NITCWikiApp.instance.languageState.getAppLanguageLocalizedName(languageCode) ?: ""
         list.selectTabWithText(R.id.horizontal_scroll_languages, language)
         delay(TestConfig.DELAY_SHORT)
     }
@@ -188,14 +188,14 @@ class SearchRobot : BaseRobot() {
     }
 
     fun assertColorOfTitleInTheSearchList(context: Context, position: Int, theme: Theme) = apply {
-        val colorRes = TestWikipediaColors.getGetColor(theme, TestThemeColorType.PRIMARY)
+        val colorRes = TestNITCWikiColors.getGetColor(theme, TestThemeColorType.PRIMARY)
         val color = Color(ContextCompat.getColor(context, colorRes))
         composeTestRule.onNodeWithTag("search_list$position")
             .assertTextColor(color)
     }
 
     fun assertColorOfTitleInTheHistoryList(position: Int, theme: Theme) = apply {
-        val color = TestWikipediaColors.getGetColor(theme, TestThemeColorType.PRIMARY)
+        val color = TestNITCWikiColors.getGetColor(theme, TestThemeColorType.PRIMARY)
         verify.assertColorForChildItemInAList(
             listId = R.id.history_list,
             childItemId = R.id.page_list_item_title,
